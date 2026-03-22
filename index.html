@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✨ MOBITECH Midterms Quiz ✨</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#c8d8e8;--card:#fef8e7;--card2:#fff9f0;
+  --pink:#f4a7b9;--blue:#a8c8e8;--yellow:#f9e07a;
+  --green:#b8e0c8;--purple:#d4b8e8;--peach:#f8c8a8;
+  --text:#4a3f5c;--text-light:#7a6f8c;--border:#e8d8b8;
+  --shadow:rgba(74,63,92,0.12);--correct:#7dd4a0;--wrong:#f4a7b9;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Quicksand',sans-serif;background:var(--bg);min-height:100vh;overflow-x:hidden;position:relative;}
+.star-layer{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.fstar{position:absolute;opacity:.5;animation:floatStar linear infinite;}
+@keyframes floatStar{0%{transform:translateY(0) rotate(0deg);opacity:.4;}50%{opacity:.65;}100%{transform:translateY(-110vh) rotate(360deg);opacity:0;}}
+.deco-dot{position:fixed;width:9px;height:9px;border-radius:50%;opacity:.4;animation:dtP 3s ease-in-out infinite;}
+@keyframes dtP{0%,100%{transform:scale(1);}50%{transform:scale(1.5);}}
+#app{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:22px 14px 50px;}
+@keyframes slideDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeSlide{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+@keyframes popC{0%{transform:scale(1);}50%{transform:scale(1.04);}100%{transform:scale(1);}}
+@keyframes cpFall{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(80px) rotate(360deg);opacity:0;}}
+
+.header{text-align:center;margin-bottom:22px;animation:slideDown .55s ease;}
+.header-card{background:var(--card);border-radius:22px;padding:22px 28px;border:2.5px solid var(--border);box-shadow:0 6px 24px var(--shadow),0 2px 0 #e8d8b8;position:relative;overflow:hidden;}
+.header-card::before{content:'';position:absolute;top:0;left:0;right:0;height:7px;background:repeating-linear-gradient(90deg,var(--pink) 0 16px,var(--yellow) 16px 32px,var(--blue) 32px 48px,var(--green) 48px 64px,var(--purple) 64px 80px);}
+.h-tape{position:absolute;top:-7px;left:50%;transform:translateX(-50%);width:58px;height:20px;border-radius:4px;}
+.h-tape.bl{background:rgba(168,200,232,.65);border:1px solid rgba(168,200,232,.9);}
+.h-tape.yl{background:rgba(249,224,122,.65);border:1px solid rgba(249,224,122,.9);}
+.h-tape.pk{background:rgba(244,167,185,.6);border:1px solid rgba(244,167,185,.8);}
+.title{font-family:'Nunito',sans-serif;font-size:1.9rem;font-weight:900;color:var(--text);letter-spacing:-.5px;line-height:1.2;}
+.title span{color:var(--pink);}
+.subtitle{font-size:.84rem;color:var(--text-light);margin-top:5px;font-weight:600;}
+.badge-row{display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap;}
+.badge{color:var(--text);font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:20px;border:1.5px solid rgba(74,63,92,.1);}
+.badge.bl{background:var(--blue);}.badge.pk{background:var(--pink);}.badge.yl{background:var(--yellow);}.badge.gr{background:var(--green);}
+
+.prog-wrap{background:var(--card);border-radius:14px;padding:12px 18px;border:2px solid var(--border);box-shadow:0 4px 12px var(--shadow);margin-bottom:16px;display:flex;align-items:center;gap:12px;animation:fadeIn .5s ease;}
+.prog-label{font-size:.78rem;font-weight:700;color:var(--text-light);white-space:nowrap;min-width:68px;}
+.prog-bg{flex:1;height:11px;background:var(--border);border-radius:99px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--pink),var(--yellow));transition:width .5s cubic-bezier(.4,0,.2,1);}
+.prog-pct{font-size:.82rem;font-weight:800;color:var(--text);min-width:38px;text-align:right;}
+
+.q-card{background:var(--card);border-radius:20px;padding:26px 28px;border:2.5px solid var(--border);box-shadow:0 6px 22px var(--shadow);margin-bottom:14px;animation:fadeSlide .42s ease;position:relative;}
+.q-tape{position:absolute;top:-9px;left:22px;height:18px;width:44px;border-radius:4px;}
+.q-tape.t1{background:rgba(249,224,122,.65);border:1.5px solid rgba(249,224,122,.8);}
+.q-tape.t2{background:rgba(168,200,232,.65);border:1.5px solid rgba(168,200,232,.9);}
+.q-tape.t3{background:rgba(244,167,185,.6);border:1.5px solid rgba(244,167,185,.8);}
+.q-tape.t4{background:rgba(184,224,200,.65);border:1.5px solid rgba(184,224,200,.8);}
+.q-tape.t5{background:rgba(212,184,232,.6);border:1.5px solid rgba(212,184,232,.8);}
+.q-num{display:inline-block;background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;font-family:'Nunito',sans-serif;font-size:.76rem;font-weight:800;padding:3px 12px;border-radius:20px;margin-bottom:11px;letter-spacing:.4px;}
+.q-text{font-size:.97rem;font-weight:700;color:var(--text);line-height:1.6;margin-bottom:18px;}
+.q-text code{background:#f0eaf8;color:#7a5c9a;padding:2px 7px;border-radius:6px;font-family:monospace;font-size:.91em;font-weight:700;}
+
+.opts-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:520px){.opts-grid{grid-template-columns:1fr;}}
+.opt-btn{background:var(--card2);border:2px solid var(--border);border-radius:13px;padding:12px 14px;text-align:left;cursor:pointer;font-family:'Quicksand',sans-serif;font-size:.88rem;font-weight:600;color:var(--text);transition:all .2s ease;display:flex;align-items:flex-start;gap:9px;}
+.opt-btn:hover:not(:disabled){border-color:var(--pink);background:#fff0f5;transform:translateY(-2px);box-shadow:0 4px 12px rgba(244,167,185,.25);}
+.opt-btn:active:not(:disabled){transform:scale(.98);}
+.opt-letter{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--blue);color:var(--text);font-family:'Nunito',sans-serif;font-weight:800;font-size:.73rem;flex-shrink:0;margin-top:1px;}
+.opt-text{line-height:1.4;}
+.opt-btn.correct{border-color:var(--correct);background:#edfbf3;animation:popC .4s ease;}
+.opt-btn.correct .opt-letter{background:var(--correct);}
+.opt-btn.wrong{border-color:var(--wrong);background:#fff0f5;animation:shake .4s ease;}
+.opt-btn.wrong .opt-letter{background:var(--wrong);}
+.opt-btn:disabled{cursor:default;}
+
+.feedback{margin-top:12px;padding:9px 15px;border-radius:11px;font-size:.86rem;font-weight:700;display:none;align-items:center;gap:8px;animation:fadeIn .3s ease;}
+.feedback.show{display:flex;}
+.feedback.cfb{background:#edfbf3;color:#3a8a5f;border:1.5px solid var(--correct);}
+.feedback.wfb{background:#fff0f5;color:#c45878;border:1.5px solid var(--wrong);}
+
+.next-btn{width:100%;margin-top:16px;padding:14px;background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;border:none;border-radius:15px;font-family:'Nunito',sans-serif;font-size:.97rem;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(212,184,232,.5);transition:all .2s;display:none;letter-spacing:.2px;}
+.next-btn.show{display:block;}
+.next-btn:hover{transform:translateY(-2px);}
+
+.score-card{background:var(--card);border-radius:26px;padding:38px 34px;border:2.5px solid var(--border);box-shadow:0 8px 32px var(--shadow);text-align:center;position:relative;overflow:hidden;}
+.score-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:7px;background:repeating-linear-gradient(90deg,var(--pink) 0 16px,var(--yellow) 16px 32px,var(--blue) 32px 48px,var(--green) 48px 64px,var(--purple) 64px 80px);}
+.s-emoji{font-size:4rem;margin-bottom:6px;animation:bounce 1.2s ease infinite;}
+.s-title{font-family:'Nunito',sans-serif;font-size:1.85rem;font-weight:900;color:var(--text);margin-bottom:5px;}
+.s-msg{font-size:.9rem;color:var(--text-light);font-weight:600;margin-bottom:26px;}
+.s-big{font-family:'Nunito',sans-serif;font-size:5rem;font-weight:900;color:var(--text);line-height:1;margin-bottom:4px;}
+.s-big span{color:var(--pink);}
+.s-out{font-size:1rem;color:var(--text-light);font-weight:700;margin-bottom:26px;}
+.s-bars{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px;}
+.sbar{background:#f5f0e8;border-radius:13px;padding:14px 16px;border:1.5px solid var(--border);}
+.sbar-n{font-family:'Nunito',sans-serif;font-size:1.8rem;font-weight:900;}
+.sbar-n.c{color:#3a8a5f;}.sbar-n.w{color:#c45878;}
+.sbar-l{font-size:.78rem;color:var(--text-light);font-weight:700;margin-top:2px;}
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.act-btn{padding:14px 18px;border:none;border-radius:15px;font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:800;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px var(--shadow);}
+.act-btn:hover{transform:translateY(-2px);}
+.btn-retake{background:linear-gradient(135deg,var(--yellow),var(--peach));color:var(--text);}
+.btn-remake{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;}
+.review-btn{display:block;width:100%;padding:13px;background:linear-gradient(135deg,var(--blue),var(--green));color:var(--text);border:none;border-radius:15px;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(168,200,232,.4);transition:all .2s;margin-top:12px;}
+.review-btn:hover{transform:translateY(-2px);}
+
+.start-card{background:var(--card);border-radius:26px;padding:38px 34px;border:2.5px solid var(--border);box-shadow:0 8px 32px var(--shadow);position:relative;overflow:hidden;text-align:center;animation:fadeIn .5s ease;}
+.start-card::before{content:'';position:absolute;top:0;left:0;right:0;height:7px;background:repeating-linear-gradient(90deg,var(--blue) 0 16px,var(--pink) 16px 32px,var(--yellow) 32px 48px,var(--green) 48px 64px,var(--purple) 64px 80px);}
+.start-icon{font-size:3.4rem;margin:12px 0 8px;}
+.start-title{font-family:'Nunito',sans-serif;font-size:1.9rem;font-weight:900;color:var(--text);margin-bottom:8px;}
+.start-desc{font-size:.88rem;color:var(--text-light);font-weight:600;line-height:1.7;margin-bottom:24px;}
+.info-pills{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;}
+.pill{background:var(--card2);border:2px solid var(--border);border-radius:20px;padding:7px 16px;font-size:.79rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:5px;}
+.start-btn{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;border:none;border-radius:18px;padding:15px 50px;font-family:'Nunito',sans-serif;font-size:1.05rem;font-weight:900;cursor:pointer;box-shadow:0 6px 22px rgba(212,184,232,.55);transition:all .2s;}
+.start-btn:hover{transform:translateY(-3px);}
+
+.review-list{display:flex;flex-direction:column;gap:13px;margin-top:16px;}
+.rev-item{background:var(--card);border-radius:17px;padding:18px 22px;border:2px solid var(--border);box-shadow:0 3px 12px var(--shadow);}
+.rev-item.ci{border-color:var(--correct);}.rev-item.wi{border-color:var(--wrong);}
+.rev-num{font-size:.73rem;font-weight:800;color:var(--text-light);margin-bottom:5px;}
+.rev-q{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.55;}
+.rev-ans{font-size:.82rem;font-weight:600;padding:5px 12px;border-radius:8px;margin-top:4px;}
+.rev-ans.yr-wr{background:#fff0f5;color:#c45878;}
+.rev-ans.ca{background:#edfbf3;color:#3a8a5f;}
+.rev-ans.yr-ri{background:#edfbf3;color:#3a8a5f;}
+
+.quiz-section{display:none;}.quiz-section.active{display:block;}
+.cp{position:fixed;width:7px;height:7px;border-radius:2px;animation:cpFall 1.3s ease forwards;pointer-events:none;z-index:999;}
+</style>
+</head>
+<body>
+<div class="star-layer" id="starLayer"></div>
+<div id="app">
+
+  <!-- START -->
+  <div class="quiz-section active" id="startScreen">
+    <div class="header"><div class="header-card">
+      <div class="h-tape bl"></div>
+      <div class="title">✨ MOBITECH <span>Midterms</span> Quiz ✨</div>
+      <div class="subtitle">Activities · Intents · User Interface</div>
+      <div class="badge-row">
+        <span class="badge bl">📱 MOBITECH</span>
+        <span class="badge pk">📝 Multiple Choice</span>
+        <span class="badge yl">⭐ Midterms</span>
+        <span class="badge gr">🌸 IT1918</span>
+      </div>
+    </div></div>
+    <div class="start-card">
+      <div class="start-icon">🌸</div>
+      <div class="start-title">Ready to Study?</div>
+      <div class="start-desc">
+        Test your knowledge on Activities, Intents, and Android User Interface!<br><br>
+        🔄 <strong>Retake</strong> — same 35 questions again<br>
+        🎲 <strong>Remake</strong> — a completely different set of 35 questions from the full bank
+      </div>
+      <div class="info-pills">
+        <div class="pill">📋 35 Questions per Set</div>
+        <div class="pill">🗂️ 70+ Question Bank</div>
+        <div class="pill">⏱️ No Time Limit</div>
+        <div class="pill">📊 Instant Feedback</div>
+      </div>
+      <button class="start-btn" onclick="startQuiz('new')">Let's Go! ✨</button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section" id="quizScreen">
+    <div class="header"><div class="header-card">
+      <div class="h-tape yl"></div>
+      <div class="title">✨ MOBITECH <span>Midterms</span> Quiz ✨</div>
+      <div class="subtitle">Answer carefully — you got this! 🌸</div>
+    </div></div>
+    <div class="prog-wrap">
+      <div class="prog-label" id="progLabel">Q 1 / 35</div>
+      <div class="prog-bg"><div class="prog-fill" id="progFill" style="width:2%"></div></div>
+      <div class="prog-pct" id="progPct">2%</div>
+    </div>
+    <div id="questionArea"></div>
+  </div>
+
+  <!-- SCORE -->
+  <div class="quiz-section" id="scoreScreen">
+    <div class="header"><div class="header-card">
+      <div class="h-tape pk"></div>
+      <div class="title">✨ MOBITECH <span>Midterms</span> Results ✨</div>
+      <div class="subtitle">Here's how you did~ 🌟</div>
+    </div></div>
+    <div class="score-card">
+      <div class="s-emoji" id="sEmoji">🎉</div>
+      <div class="s-title" id="sTitle">Great Job!</div>
+      <div class="s-msg" id="sMsg">You did amazing~</div>
+      <div class="s-big"><span id="sNum">0 / 35</span></div>
+      <div class="s-out" id="sOut">(0%)</div>
+      <div class="s-bars">
+        <div class="sbar"><div class="sbar-n c" id="cCount">0</div><div class="sbar-l">✅ Correct</div></div>
+        <div class="sbar"><div class="sbar-n w" id="wCount">0</div><div class="sbar-l">❌ Wrong</div></div>
+      </div>
+      <div class="btn-row">
+        <button class="act-btn btn-retake" onclick="retakeQuiz()">🔄 Retake</button>
+        <button class="act-btn btn-remake" onclick="remakeQuiz()">🎲 Remake</button>
+      </div>
+      <button class="review-btn" onclick="showReview()">📖 Review Answers</button>
+    </div>
+  </div>
+
+  <!-- REVIEW -->
+  <div class="quiz-section" id="reviewScreen">
+    <div class="header"><div class="header-card">
+      <div class="h-tape bl"></div>
+      <div class="title">✨ <span>Review</span> Mode ✨</div>
+      <div class="subtitle">Check your answers~ 📖</div>
+    </div></div>
+    <div id="reviewList" class="review-list"></div>
+    <button class="review-btn" onclick="showSection('scoreScreen')">← Back to Results</button>
+  </div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  FULL QUESTION BANK
+//  • Q0–Q29  = all 30 exam questions (images, red circles = answer)
+//  • Q30–Q72 = questions built strictly from 03_Handout & 04_Handout
+// ═══════════════════════════════════════════════════════════════
+const BANK = [
+
+  // ── EXAM QUESTIONS (30) ────────────────────────────────────────
+
+  // Part A
+  {q:"Which method is called when the activity is no longer visible to the user?",
+   opts:["onPause()","onResume()","onStart()","onStop()"],ans:3},
+
+  {q:"Which of the following app components is displayed outside the user interface of an application?",
+   opts:["App Bar","Dialog","Notification","Toast"],ans:2},
+
+  {q:"Which of the following methods takes place after onRestart()?",
+   opts:["onPause()","onResume()","onStart()","onStop()"],ans:2},
+
+  {q:"This part of intent may instruct the Android system how to treat an activity after it is launched.",
+   opts:["Intent Extra","Intent Flag","Intent Object","Target Activity"],ans:1},
+
+  {q:"This may prompt the user to enter additional information.",
+   opts:["App Bar","Dialog","Notification","Toast"],ans:1},
+
+  {q:"This provides interactive elements that are familiar to the users.",
+   opts:["App Bar","Dialog","Notification","Toast"],ans:0},
+
+  {q:"This provides a simple feedback about an operation.",
+   opts:["App Bar","Dialog","Notification","Toast"],ans:3},
+
+  {q:"This app component comes with tabs or drop-down lists.",
+   opts:["App Bar","Dialog","Notification","Toast"],ans:0},
+
+  {q:"Which app component is also known as the action bar?",
+   opts:["App Bar","Dialog","Notification","Toast"],ans:0},
+
+  {q:"This method is called before the activity becomes visible to the user.",
+   opts:["onPause()","onResume()","onStart()","onStop()"],ans:2},
+
+  {q:"It contains a reference to the data you want the receiving activity to operate on.",
+   opts:["Intent Extra","Intent Flag","Intent Object","Target Activity"],ans:2},
+
+  {q:"It prompts the user to select from a given set of options.",
+   opts:["App Bar","Dialog","Notification","Toast"],ans:1},
+
+  {q:"Which app component automatically disappears after a few seconds?",
+   opts:["App Bar","Dialog","Notification","Toast"],ans:3},
+
+  {q:"Which of the following methods comes before onRestart()?",
+   opts:["onPause()","onResume()","onStart()","onStop()"],ans:3},
+
+  // Part B
+  {q:"This method is invoked before the activity starts interacting with the user.",
+   opts:["onPause()","onResume()","onStart()","onStop()"],ans:1},
+
+  {q:"What are the required attributes of all user interface elements?",
+   opts:["Gravity and Weight","ID and Text","Input Type and Hint","Width and Height"],ans:3},
+
+  {q:"Complete the Java statement: <code>setContentView(R._____.activity_main);</code>",
+   opts:["id","layout","onCreate","void"],ans:1},
+
+  {q:"Which causes an error in the following XML code? <code>android:text=\"Midterm Exam\";</code>",
+   opts:["android","text","Midterm Exam",";"],ans:3},
+
+  {q:"What is missing in the following method declaration? <code>protected _______ onCreate(Bundle savedValues) { }</code>",
+   opts:["extends","implements","new","void"],ans:3},
+
+  {q:"How many arguments does the <code>getText()</code> method require?",
+   opts:["0","1","2","3"],ans:0},
+
+  {q:"Complete the XML code for the manifest file: <code>&lt;activity android:_____=\"EndActivity\"&gt;&lt;/activity&gt;</code>",
+   opts:["action","category","id","name"],ans:3},
+
+  {q:"Which causes an error in the following XML code? <code>android:id=\"+@id/button1\"</code>",
+   opts:["android:id","+@id","/","button1"],ans:1},
+
+  {q:"What is missing in the following class declaration? <code>public class ProbActivity _____ Activity { }</code>",
+   opts:["extends","implements","static","void"],ans:0},
+
+  {q:"How many arguments does the <code>findViewByld()</code> method require?",
+   opts:["0","1","2","3"],ans:1},
+
+  {q:"Which causes an error in the following statement? <code>String newText = et.setText().toString();</code>",
+   opts:["et","newText","setText()","toString()"],ans:2},
+
+  {q:"How many arguments does the <code>setText()</code> method require?",
+   opts:["0","1","2","3"],ans:1},
+
+  {q:"Which best describes a Linear Layout?",
+   opts:["It creates large and complex layouts.","It organizes its child view elements horizontally or vertically.","It arranges its child objects into rows or columns.","It arranges its child objects in a scrollable rectangular grid."],ans:1},
+
+  {q:"Which causes an error in the code below? <code>EditText et; et = (EditText)findViewbyId(R.id.txt);</code>",
+   opts:["EditText","et","findViewbyId","R.id.txt"],ans:3},
+
+  {q:"Which app component usually appears at the bottom of the screen?",
+   opts:["App Bar","Dialog","Notification","Toast"],ans:3},
+
+  {q:"Clicking this component will display various details about the involved application/service.",
+   opts:["App Bar","Dialog","Notification","Toast"],ans:2},
+
+  // ── PDF-BASED QUESTIONS (43) — from 03_Handout & 04_Handout ────
+
+  // Activities (03_Handout p.1)
+  {q:"An activity represents a single screen in the app where the user can perform a single focused task. How is it usually presented to the user?",
+   opts:["As a pop-up window","As a full-screen window","As a notification","As a dialog box"],ans:1},
+
+  {q:"What are the three steps to implement an activity in Android Studio?",
+   opts:["Create XML file, add permissions, deploy app","Create an Activity Java class, implement a basic UI in XML, declare the activity in AndroidManifest.xml","Write Java code, run the app, test it","Declare permissions, create layout, add event listeners"],ans:1},
+
+  {q:"Which tool automates the three tasks of creating an Activity class, XML layout, and manifest declaration?",
+   opts:["File > New > Layout","File > New > Activity","File > New > Class","File > New > XML"],ans:1},
+
+  {q:"What is the main activity (MainActivity.java) presented to the user?",
+   opts:["When any notification is tapped","When the app is launched","When the screen rotates","When the back button is pressed"],ans:1},
+
+  {q:"What is the activity life cycle?",
+   opts:["The list of permissions an activity requires","The set of states an activity can be in during its entire lifetime","The sequence of XML files loaded by an activity","The back stack order of activities"],ans:1},
+
+  {q:"What does the <code>onCreate()</code> method do?",
+   opts:["It is invoked when the activity is no longer visible","It is invoked when the activity starts interacting with the user","It is invoked when the app is launched for the first time; it happens only once for the entire life of the activity","It is invoked when the system is resuming another activity"],ans:2},
+
+  {q:"When <code>onStart()</code> is followed by <code>onResume()</code>, what does this mean?",
+   opts:["The activity becomes hidden","The activity comes to the foreground","The activity is about to end","The activity is destroyed"],ans:1},
+
+  {q:"What is the <code>onPause()</code> method invoked when?",
+   opts:["The app is launched for the first time","The activity is no longer visible to the user","The system is about to start resuming another activity","The activity comes back after being stopped"],ans:2},
+
+  {q:"When <code>onStop()</code> is followed by <code>onRestart()</code>, what does this mean?",
+   opts:["The activity is about to end","The activity is coming back to interact with the user","The system is destroying the activity","The activity is paused temporarily"],ans:1},
+
+  {q:"The <code>onDestroy()</code> method is invoked when:",
+   opts:["The activity becomes partially visible","The activity starts interacting with the user","The activity is finishing or the system is temporarily destroying it due to a configuration change","The activity resumes from the background"],ans:2},
+
+  {q:"<code>onRestart()</code> is invoked when the activity comes back after being stopped. It is always followed by:",
+   opts:["onPause()","onResume()","onStart()","onDestroy()"],ans:2},
+
+  {q:"Each time a new activity starts, the previous activity is stopped but preserved in:",
+   opts:["Intent stack","Layout buffer","Back stack","View group"],ans:2},
+
+  // Intents (03_Handout p.2)
+  {q:"An activity is started or activated with what?",
+   opts:["A layout file","An intent","A manifest tag","A context object"],ans:1},
+
+  {q:"What is an Intent?",
+   opts:["A synchronous method that passes data between views","An asynchronous message used in an activity to request an action from another activity or app component","A layout container used to hold multiple activities","A type of notification displayed outside the app"],ans:1},
+
+  {q:"Which of the following is a use of an intent?",
+   opts:["To define the visual layout of an activity","To start one activity from another activity and pass data between activities","To declare permissions in the manifest","To create a new XML file"],ans:1},
+
+  {q:"Which part of an intent is the activity that will receive the intent?",
+   opts:["Intent Extra","Intent Flag","Intent Object","Target Activity"],ans:3},
+
+  {q:"Intent extras carry information the receiving activity requires to accomplish the requested action. They are:",
+   opts:["Required for all intents","Optional","Mandatory only for explicit intents","Only used in implicit intents"],ans:1},
+
+  {q:"Which type of intent has the target activity class name already identified?",
+   opts:["Implicit intent","Broadcast intent","Explicit intent","Service intent"],ans:2},
+
+  {q:"Which type of intent does NOT specify the target but has a general action, category, and data type?",
+   opts:["Explicit intent","Implicit intent","Pending intent","Broadcast intent"],ans:1},
+
+  {q:"What does the <code>parentActivityName</code> attribute in AndroidManifest.xml enable?",
+   opts:["Sets the app theme","Enables a left-facing back arrow to navigate from the current activity to its parent activity","Declares the activity's network permissions","Specifies the layout XML for the activity"],ans:1},
+
+  // UI Fundamentals (04_Handout p.1)
+  {q:"What does the layout define in an Android app?",
+   opts:["The database schema of the app","The structure for an app's user interface","The permissions required by the app","The back stack order of activities"],ans:1},
+
+  {q:"In Android, a View (widget):",
+   opts:["Is an invisible container that defines layout structure","Draws something the user can see and interact with","Stores data for the application","Manages network connections"],ans:1},
+
+  {q:"In Android, a ViewGroup (layout):",
+   opts:["Draws something the user can see and interact with","Sends notifications to the user","Is an invisible container that defines the layout structure for View and other ViewGroup objects","Manages the activity life cycle"],ans:2},
+
+  {q:"What are the two ways to create a layout in Android?",
+   opts:["Using Java and Kotlin","Declaring UI elements in XML, and instantiating layout elements at runtime","Using the terminal and Android Studio","Writing in XML and deploying to the server"],ans:1},
+
+  {q:"Where is a view/widget typically captured after being defined in the layout file?",
+   opts:["In the onStop() method","In the AndroidManifest.xml","In the onCreate() method","In a separate Utility class"],ans:2},
+
+  {q:"What is Context in Android?",
+   opts:["A type of layout used to display web content","An interface to global information about an application environment","A method that handles activity lifecycle transitions","A variable that stores the current user's credentials"],ans:1},
+
+  {q:"All view groups include a width and height. Each view is required to define them. Which attribute sets the size of the view to the dimensions required by its content?",
+   opts:["match_parent","fill_parent","wrap_content","fixed_size"],ans:2},
+
+  {q:"Which attribute sets the view to be as big as its parent view group will allow?",
+   opts:["wrap_content","fill_content","match_parent","fixed_parent"],ans:2},
+
+  {q:"Which layout type creates large and complex layouts with a flat view hierarchy (no nested view groups)?",
+   opts:["Linear Layout","Relative Layout","Table Layout","Constraint Layout"],ans:3},
+
+  {q:"Which layout type organizes its child view elements into a single horizontal or vertical row?",
+   opts:["Grid Layout","Constraint Layout","Linear Layout","Frame Layout"],ans:2},
+
+  {q:"Which layout type is used to specify the location of child objects relative to each other or to the parent?",
+   opts:["Linear Layout","Relative Layout","Frame Layout","Table Layout"],ans:1},
+
+  {q:"Which layout type is used for displaying web pages?",
+   opts:["Frame Layout","Table Layout","Grid Layout","Web View"],ans:3},
+
+  {q:"Which layout type is designed to block out an area on the screen to display a single item?",
+   opts:["Relative Layout","Web View","Frame Layout","Constraint Layout"],ans:2},
+
+  {q:"Which layout type arranges its child objects into rows and columns?",
+   opts:["Grid Layout","Frame Layout","Table Layout","Linear Layout"],ans:2},
+
+  {q:"Which layout type arranges its child objects in a rectangular grid that can be scrolled?",
+   opts:["Table Layout","Frame Layout","Relative Layout","Grid Layout"],ans:3},
+
+  // UI Components (04_Handout p.2)
+  {q:"What is a notification in Android?",
+   opts:["A small popup that provides feedback about an operation","A dialog that prompts the user to make a decision","A message that Android displays outside the app's UI to provide reminders, communication, or timely information","An app bar component that shows tabs or drop-down lists"],ans:2},
+
+  {q:"What does the notification drawer allow the user to do?",
+   opts:["Create new notifications","View more details and take actions with the notification","Launch a new activity","Change app settings"],ans:1},
+
+  {q:"What is one of the key features of the app bar?",
+   opts:["It provides simple feedback about an operation in a small popup","It prompts the user to make a decision or enter additional information","It provides a dedicated space for giving the app an identity and indicating the user's location in the app","It automatically disappears after a few seconds"],ans:2},
+
+  {q:"Another key feature of the app bar is:",
+   opts:["It records keystrokes for auto-complete","Support for navigation and view switching with tabs or drop-down lists","It displays a quick pop-up message to the user","It locks the screen after inactivity"],ans:1},
+
+  {q:"A Snackbar in Android:",
+   opts:["Provides simple feedback in a small popup and automatically disappears","Prompts the user to make a decision","Provides a quick pop-up message to the user","Displays reminders outside the app's UI"],ans:2},
+
+  {q:"A dialog in Android is best described as:",
+   opts:["A message displayed outside the app's UI","A small window that prompts the user to make a decision or enter additional information; it is not designed to fill the screen","A quick pop-up message that disappears automatically","An interactive bar that provides access to important actions"],ans:1},
+
+  {q:"A menu in Android is used for:",
+   opts:["Displaying reminders and notifications outside the app","Presenting user actions and other options in the app's activities","Providing simple feedback about an operation","Prompting the user to enter additional information"],ans:1},
+
+  {q:"What does a Toast provide in Android?",
+   opts:["A dialog that fills the screen for user input","A persistent status bar notification","Simple feedback about an operation in a small popup","A navigation component with tabs"],ans:2}
+
+];
+
+// ═══════════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════════
+const SET_SIZE   = 35;
+let currentSet   = [];
+let prevSetIdxs  = [];   // BANK indices used in the last set
+let wrongIdxs    = [];   // BANK indices the user got WRONG in the last set
+let currentIdx   = 0;
+let score        = 0;
+let userAnswers  = [];
+let answered     = false;
+
+// ═══════════════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════════════
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function showSection(id) {
+  document.querySelectorAll('.quiz-section').forEach(e => e.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// Build a set of 35 questions.
+// avoidIdxs = indices used in previous set (skip unless needed)
+// wrongIdxs = indices the user got WRONG — always bring these back first
+function buildSet(avoidIdxs, wrongIdxs) {
+  const avoidSet = new Set(avoidIdxs);
+  const wrongSet = new Set(wrongIdxs);
+
+  // 1. Wrong from last round — always carry over (highest priority)
+  const wrongItems = BANK
+    .map((q, i) => ({ q, i }))
+    .filter(({ i }) => wrongSet.has(i));
+
+  // 2. Questions never seen before (not in previous set at all)
+  const freshItems = BANK
+    .map((q, i) => ({ q, i }))
+    .filter(({ i }) => !avoidSet.has(i) && !wrongSet.has(i));
+
+  // 3. Old-but-correctly-answered questions — pad if we still need more
+  const oldCorrect = BANK
+    .map((q, i) => ({ q, i }))
+    .filter(({ i }) => avoidSet.has(i) && !wrongSet.has(i));
+
+  // Pool order: wrong first → fresh → old-correct as padding
+  const pool   = [...shuffle(wrongItems), ...shuffle(freshItems), ...shuffle(oldCorrect)];
+  const picked = pool.slice(0, SET_SIZE);
+
+  prevSetIdxs = picked.map(({ i }) => i);
+  return shuffle(picked.map(({ q }) => q));
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  QUIZ CONTROL
+// ═══════════════════════════════════════════════════════════════
+function startQuiz(mode) {
+  if (mode === 'new') {
+    wrongIdxs   = [];
+    currentSet  = buildSet([], []);
+  } else if (mode === 'remake') {
+    currentSet  = buildSet(prevSetIdxs, wrongIdxs);
+  }
+  // 'retake' keeps currentSet unchanged, wrongIdxs unchanged
+
+  currentIdx  = 0;
+  score       = 0;
+  userAnswers = new Array(SET_SIZE).fill(null);
+  answered    = false;
+  showSection('quizScreen');
+  renderQ();
+}
+
+function retakeQuiz() { startQuiz('retake'); }
+function remakeQuiz()  { startQuiz('remake'); }
+
+// ═══════════════════════════════════════════════════════════════
+//  RENDER QUESTION
+// ═══════════════════════════════════════════════════════════════
+function renderQ() {
+  const q     = currentSet[currentIdx];
+  const total = currentSet.length;
+  const pct   = Math.min(Math.round((currentIdx / total) * 100) + 2, 100);
+
+  document.getElementById('progLabel').textContent = `Q ${currentIdx + 1} / ${total}`;
+  document.getElementById('progFill').style.width  = pct + '%';
+  document.getElementById('progPct').textContent   = pct + '%';
+
+  const tc     = ['t1','t2','t3','t4','t5'][currentIdx % 5];
+  const isLast = currentIdx + 1 === total;
+  const L      = ['A','B','C','D'];
+
+  const optsHTML = q.opts.map((o, i) =>
+    `<button class="opt-btn" id="opt_${i}" onclick="selectAns(${i})">
+       <span class="opt-letter">${L[i]}</span>
+       <span class="opt-text">${o}</span>
+     </button>`
+  ).join('');
+
+  document.getElementById('questionArea').innerHTML = `
+    <div class="q-card">
+      <div class="q-tape ${tc}"></div>
+      <div class="q-num">Question ${currentIdx + 1} of ${total}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="opts-grid">${optsHTML}</div>
+      <div class="feedback" id="feedback"></div>
+      <button class="next-btn" id="nextBtn" onclick="nextQ()">
+        ${isLast ? '🎉 See My Results!' : 'Next Question →'}
+      </button>
+    </div>`;
+
+  answered = false;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  ANSWER
+// ═══════════════════════════════════════════════════════════════
+function selectAns(idx) {
+  if (answered) return;
+  answered = true;
+
+  const q  = currentSet[currentIdx];
+  const ok = idx === q.ans;
+  userAnswers[currentIdx] = idx;
+  if (ok) score++;
+
+  document.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+  document.getElementById('opt_' + idx).classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) document.getElementById('opt_' + q.ans).classList.add('correct');
+
+  const fb = document.getElementById('feedback');
+  const L  = ['A','B','C','D'];
+  if (ok) {
+    fb.className = 'feedback cfb show';
+    fb.innerHTML = '<span>✅</span><span>Correct! Great job~ 🌸</span>';
+    spawnMini(document.getElementById('opt_' + idx));
+  } else {
+    fb.className = 'feedback wfb show';
+    fb.innerHTML = `<span>❌</span><span>Correct answer: <strong>${L[q.ans]}. ${q.opts[q.ans]}</strong></span>`;
+  }
+  document.getElementById('nextBtn').classList.add('show');
+}
+
+function nextQ() {
+  currentIdx++;
+  if (currentIdx >= currentSet.length) showResults();
+  else renderQ();
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  RESULTS
+// ═══════════════════════════════════════════════════════════════
+function showResults() {
+  const total = currentSet.length;
+  const pct   = Math.round((score / total) * 100);
+
+  // Record which BANK indices the user got wrong this round
+  wrongIdxs = currentSet
+    .map((q, i) => ({ bankIdx: BANK.indexOf(q), correct: userAnswers[i] === q.ans }))
+    .filter(({ correct }) => !correct)
+    .map(({ bankIdx }) => bankIdx)
+    .filter(idx => idx !== -1);
+
+  let emoji, title, msg;
+  if      (pct === 100) { emoji='🏆'; title='Perfect Score!';  msg='Absolutely flawless! You are a MOBITECH superstar~ ⭐'; }
+  else if (pct >= 85)   { emoji='🎉'; title='Excellent!';      msg='Amazing work! You really know your stuff~ 🌸'; }
+  else if (pct >= 70)   { emoji='✨'; title='Good Job!';       msg="Nice effort! A little more review and you'll ace it~ 📚"; }
+  else if (pct >= 55)   { emoji='📖'; title='Keep Studying!';  msg='Not bad! Review the handouts and try again~ 💪'; }
+  else                  { emoji='🌱'; title='Keep Going!';     msg='Every attempt makes you stronger! Study hard~ 🌟'; }
+
+  document.getElementById('sEmoji').textContent = emoji;
+  document.getElementById('sTitle').textContent = title;
+  document.getElementById('sMsg').textContent   = msg;
+  document.getElementById('sNum').textContent   = `${score} / ${total}`;
+  document.getElementById('sOut').textContent   = `(${pct}% — ${pct >= 75 ? 'Passing ✅' : 'Keep Trying 💪'})`;
+  document.getElementById('cCount').textContent = score;
+  document.getElementById('wCount').textContent = total - score;
+
+  // Show how many wrong questions will carry over
+  const remakeNote = wrongIdxs.length > 0
+    ? `<div style="margin-top:10px;font-size:.78rem;color:var(--text-light);font-weight:700;">🎲 Remake will include your <strong style="color:#c45878">${wrongIdxs.length} missed question${wrongIdxs.length > 1 ? 's' : ''}</strong> + new ones!</div>`
+    : `<div style="margin-top:10px;font-size:.78rem;color:#3a8a5f;font-weight:700;">🌟 No missed questions — Remake gives you a fresh new set!</div>`;
+  document.getElementById('sOut').insertAdjacentHTML('afterend', remakeNote);
+
+  showSection('scoreScreen');
+  if (pct >= 85) setTimeout(spawnFull, 200);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  REVIEW
+// ═══════════════════════════════════════════════════════════════
+function showReview() {
+  const L = ['A','B','C','D'];
+  document.getElementById('reviewList').innerHTML = currentSet.map((q, i) => {
+    const u   = userAnswers[i];
+    const ok  = u === q.ans;
+    const txt = q.q.replace(/<[^>]+>/g, '');
+    const ansHTML = ok
+      ? `<div class="rev-ans yr-ri">✅ Your answer: ${L[u]}. ${q.opts[u]}</div>`
+      : `<div class="rev-ans yr-wr">Your answer: ${L[u]}. ${q.opts[u]}</div>
+         <div class="rev-ans ca">✅ Correct: ${L[q.ans]}. ${q.opts[q.ans]}</div>`;
+    return `
+      <div class="rev-item ${ok ? 'ci' : 'wi'}">
+        <div class="rev-num">Question ${i + 1} ${ok ? '✅' : '❌'}</div>
+        <div class="rev-q">${txt}</div>
+        ${ansHTML}
+      </div>`;
+  }).join('');
+  showSection('reviewScreen');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  CONFETTI
+// ═══════════════════════════════════════════════════════════════
+function spawnMini(el) {
+  if (!el) return;
+  const r = el.getBoundingClientRect();
+  const cols = ['#f9e07a','#f4a7b9','#a8c8e8','#b8e0c8','#d4b8e8'];
+  for (let i = 0; i < 9; i++) {
+    const e = document.createElement('div'); e.className = 'cp';
+    e.style.cssText = `left:${r.left+r.width/2+(Math.random()-.5)*70}px;top:${r.top+window.scrollY+(Math.random()-.5)*22}px;background:${cols[i%5]};animation-delay:${Math.random()*.3}s;`;
+    document.body.appendChild(e); setTimeout(() => e.remove(), 1700);
+  }
+}
+function spawnFull() {
+  const cols = ['#f9e07a','#f4a7b9','#a8c8e8','#b8e0c8','#d4b8e8','#f8c8a8'];
+  for (let i = 0; i < 70; i++) {
+    setTimeout(() => {
+      const e = document.createElement('div'); e.className = 'cp';
+      e.style.cssText = `left:${Math.random()*100}vw;top:${12+Math.random()*38}vh;background:${cols[Math.floor(Math.random()*6)]};width:${5+Math.random()*6}px;height:${5+Math.random()*6}px;animation-duration:${.8+Math.random()*.8}s;animation-delay:${Math.random()*.5}s;`;
+      document.body.appendChild(e); setTimeout(() => e.remove(), 2300);
+    }, i * 26);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  BACKGROUND DECORATION
+// ═══════════════════════════════════════════════════════════════
+(function () {
+  const layer = document.getElementById('starLayer');
+  const chars = ['★','✦','✧','✩','✫','✬','◆','◇','○','♡','✿','❀','✼','⊹','·'];
+  const cols  = ['#f9e07a','#f4a7b9','#a8c8e8','#b8e0c8','#d4b8e8','#f8c8a8','#fff'];
+  for (let i = 0; i < 60; i++) {
+    const el = document.createElement('div'); el.className = 'fstar';
+    el.textContent = chars[Math.floor(Math.random()*chars.length)];
+    el.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*110}%;color:${cols[Math.floor(Math.random()*7)]};font-size:${9+Math.random()*15}px;animation-duration:${11+Math.random()*18}s;animation-delay:${Math.random()*15}s;`;
+    layer.appendChild(el);
+  }
+  const dc = ['#f4a7b9','#a8c8e8','#f9e07a','#b8e0c8','#d4b8e8','#f8c8a8'];
+  [{top:'5%',left:'3%'},{top:'15%',right:'4%'},{top:'32%',left:'2%'},{top:'52%',right:'3%'},
+   {top:'70%',left:'4%'},{top:'85%',right:'5%'},{top:'95%',left:'6%'},{top:'8%',right:'8%'}]
+  .forEach((p, i) => {
+    const d = document.createElement('div'); d.className = 'deco-dot';
+    d.style.cssText = Object.entries(p).map(([k,v])=>`${k}:${v}`).join(';')+`;background:${dc[i%6]};animation-delay:${i*.45}s;`;
+    document.body.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>
